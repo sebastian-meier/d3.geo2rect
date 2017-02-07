@@ -1,0 +1,41 @@
+{
+  "name": "d3.geo2rect",
+  "version": "0.0.1",
+  "description": "Morphing geojson polygons into rectangles",
+  "keywords": [
+    "d3",
+    "geojson"
+  ],
+  "license": "GPL-3.0",
+  "main": "build/geo2rect.min.js",
+  "jsnext:main": "index",
+  "homepage": "https://github.com/sebastian-meier/d3.geo2rect",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sebastian-meier/d3.geo2rect.git"
+  },
+  "scripts": {
+    "compile": "eslint src/*.js || exit 0 && rm -rf build && mkdir build && rollup -c rollup.config.js && uglifyjs build/geo2rect.js -c -m -o build/geo2rect.min.js",
+    "watch": "watch 'npm run compile' src"    
+  },
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-eslint": "^7.1.1",
+    "babel-preset-es2015-rollup": "^3.0.0",
+    "eslint": "^3.15.0",
+    "rollup": "0.27",
+    "rollup-plugin-babel": "^2.7.1",
+    "uglify-js": "2",
+    "watch": "^1.0.1"
+  },
+  "eslintConfig":{
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module"
+    },
+    "parser": "babel-eslint",
+    "env": {
+      "es6": true
+    }
+  }
+}

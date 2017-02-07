@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+path{
+  fill:transparent;
+  stroke:rgba(0,0,0,1);
+}
+
+/*4,*/
+
+.class-4 circle{
+  fill:red;
+}
+
+</style>
+<body>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
+<script src="../build/geo2rect.js"></script>
+<script>
+
+var config = {
+  width : 700,
+  height : 700,
+  padding : 70,
+  projection : d3.geoMercator(),
+  duration : 1000,
+  key:function(d){return d.properties.short; },
+  grid : {
+    alaska:{x:0,y:0},
+    maine:{x:11,y:0},
+    vt:{x:10,y:1},
+    nh:{x:11,y:1},
+    wash:{  x:1, y:2},
+    idaho:{ x:2, y:2},
+    mont:{  x:3, y:2},
+    nd:{    x:4, y:2},
+    minn:{  x:5, y:2},
+    ill:{   x:6, y:2},
+    wis:{   x:7, y:2},
+    mich:{  x:8, y:2},
+    ny:{    x:9, y:2},
+    ri:{    x:10,y:2},
+    mass:{  x:11,y:2},
+    ore:{   x:1,y:3},
+    nev:{   x:2,y:3},
+    wyo:{   x:3,y:3},
+    sd:{    x:4,y:3},
+    iowa:{  x:5,y:3},
+    ind:{   x:6,y:3},
+    ohio:{  x:7,y:3},
+    pa:{    x:8,y:3},
+    nj:{    x:9,y:3},
+    conn:{  x:10,y:3},
+    calif:{ x:1,y:4},
+    utah:{  x:2,y:4},
+    colo:{  x:3,y:4},
+    neb:{   x:4,y:4},
+    mo:{    x:5,y:4},
+    ky:{    x:6,y:4},
+    wva:{   x:7,y:4},
+    va:{    x:8,y:4},
+    md:{    x:9,y:4},
+    del:{   x:10,y:4},
+    ariz:{  x:2,y:5},
+    nm:{    x:3,y:5},
+    kan:{   x:4,y:5},
+    ark:{   x:5,y:5},
+    tenn:{  x:6,y:5},
+    nc:{    x:7,y:5},
+    sc:{    x:8,y:5},
+    dc:{    x:9,y:5},
+    okla:{  x:4,y:6},
+    la:{    x:5,y:6},
+    miss:{  x:6,y:6},
+    ala:{   x:7,y:6},
+    ga:{    x:8,y:6},
+    hawaii:{x:0,y:7},
+    texas:{ x:4,y:7},
+    fla:{   x:9,y:7},
+    pc:{    x:11,y:7}
+  }
+};
+
+var svg = d3.select('body').append('svg').attr('width',config.width).attr('height',config.height);
+
+var g2r = new geo2rect.draw();
+
+d3.json('./data/us.geojson', function(err, data){
+  var geojson = geo2rect.compute(data);
+
+  g2r.config = config;
+  g2r.data = geojson;
+  g2r.svg = svg.append('g');
+
+  g2r.draw();
+});
+
+d3.select('body').append('a').text('Toggle').on('click', function(){
+  g2r.toggle();
+  g2r.draw();
+  console.log(g2r.mode);
+});
+
+</script>
+</body>
+</html>

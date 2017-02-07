@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+path{
+  fill:transparent;
+  stroke:rgba(0,0,0,1);
+}
+
+/*4,*/
+
+.class-4 circle{
+  fill:red;
+}
+
+</style>
+<body>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
+<script src="../build/geo2rect.js"></script>
+<script>
+
+var config = {
+  width : 700,
+  height : 700,
+  padding : 70,
+  projection : d3.geoMercator(),
+  duration : 1000,
+  key:function(d){return d.properties.Kurz; },
+  grid : {
+    SH:{x:1,y:0},
+    HB:{x:0,y:1},
+    HH:{x:1,y:1},
+    MV:{x:2,y:1},
+    NI:{x:0,y:2},
+    BB:{x:1,y:2},
+    BE:{x:2,y:2},
+    NW:{x:0,y:3},
+    ST:{x:1,y:3},
+    SN:{x:2,y:3},
+    RP:{x:0,y:4},
+    HE:{x:1,y:4},
+    TH:{x:2,y:4},
+    SL:{x:0,y:5},
+    BW:{x:1,y:5},
+    BY:{x:2,y:5}
+  }
+};
+
+var svg = d3.select('body').append('svg').attr('width',config.width).attr('height',config.height);
+
+var g2r = new geo2rect.draw();
+
+d3.json('./data/de.geojson', function(err, data){
+  var geojson = geo2rect.compute(data);
+
+  g2r.config = config;
+  g2r.data = geojson;
+  g2r.svg = svg.append('g');
+
+  g2r.draw();
+});
+
+d3.select('body').append('a').text('Toggle').on('click', function(){
+  g2r.toggle();
+  g2r.draw();
+  console.log(g2r.mode);
+});
+
+</script>
+</body>
+</html>
