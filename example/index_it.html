@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+path{
+  fill:transparent;
+  stroke:rgba(0,0,0,1);
+}
+
+/*4,*/
+
+.class-4 circle{
+  fill:red;
+}
+
+</style>
+<body>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
+<script src="http://prjcts.sebastianmeier.eu/geo2rect/build/geo2rect.js"></script>
+<script>
+
+var config = {
+  width : 700,
+  height : 700,
+  padding : 70,
+  projection : d3.geoMercator(),
+  duration : 1000,
+  key:function(d){return d.properties.NOME_REG; },
+  grid : {
+    TRENTINOALTOADIGE:{x:2,y:0},
+    AOSTA:{x:0,y:1},
+    PIEMONTE:{x:0,y:1},
+    LIGURIA:{x:0,y:1},
+    LOMBARDIA:{x:1,y:1},
+    VENETO:{x:2,y:1},
+    FRIULI:{x:3,y:1},
+    TOSCANA:{x:1,y:2},
+    UMBRIA:{x:1,y:2},
+    EMILIAROMAGNA:{x:2,y:2},
+    MARCHE:{x:3,y:3},
+    LAZIO:{x:2,y:3},
+    ABRUZZO:{x:3,y:4},
+    CAMPANIA:{x:4,y:4},
+    MOLISE:{x:3,y:5},
+    PUGLIA:{x:5,y:5},
+    BASILICATA:{x:3,y:5},
+    CALABRIA:{x:2,y:6},
+    SICILIA:{x:0,y:7},
+    SARDEGNA:{x:0,y:4}
+  }
+};
+
+var svg = d3.select('body').append('svg').attr('width',config.width).attr('height',config.height);
+
+var g2r = new geo2rect.draw();
+
+d3.json('./data/italy.geojson', function(err, data){
+  var geojson = geo2rect.compute(data);
+
+  g2r.config = config;
+  g2r.data = geojson;
+  g2r.svg = svg.append('g');
+
+  g2r.draw();
+});
+
+d3.select('body').append('a').text('Toggle').on('click', function(){
+  g2r.toggle();
+  g2r.draw();
+  console.log(g2r.mode);
+});
+
+</script>
+</body>
+</html>

@@ -97,4 +97,7 @@ Live examples can be found here:
 [Germany](http://prjcts.sebastianmeier.eu/geo2rect/example/index_de.html)
 [US](http://prjcts.sebastianmeier.eu/geo2rect/example/index_us.html)
 [London](http://prjcts.sebastianmeier.eu/geo2rect/example/index_ldn.html)
+[Italy](http://de.straba.us/geo2rect/example/index_it.html)
+
+
 
